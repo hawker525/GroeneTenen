@@ -5,6 +5,7 @@ import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.Adres;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Null;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -59,8 +60,8 @@ public class FiliaalControllerTest {
                 filiaalController.read(1L).getModelMap().get("filiaal"));
     }
 
-//    @Test
-//    public void readMetOnbestaandeIDGeeftNullTerug() {
-//        assertNull(filiaalController.read(666L).getModelMap().get("filiaal"));
-//    }
+    @Test(expected = NullPointerException.class)
+    public void readMetOnbestaandeIDGeeftNullTerug() {
+        assertNull(filiaalController.read(666L).getModelMap().get("filiaal"));
+    }
 }
