@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -44,7 +45,7 @@ class FiliaalController {
     }
 
     @GetMapping(params = {"vanpostcode", "totpostcode"})
-    ModelAndView findPostcodeReeks(PostcodeReeks reeks, BindingResult bindingResult) {
+    ModelAndView findPostcodeReeks(@Valid PostcodeReeks reeks, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView(PER_POSTCODE_VIEW);
         if (!bindingResult.hasErrors()) {
             List<Filiaal> filialen = filiaalService.findByPostcodeReeks(reeks);
@@ -65,10 +66,6 @@ class FiliaalController {
         return new ModelAndView(PER_POSTCODE_VIEW).addObject(reeks);
     }
 
-    @InitBinder("postcodeReeks")
-    void initBinderPostcodeReeks(DataBinder dataBinder) {
-        dataBinder.setRequiredFields("vanpostcode", "totpostcode");
-    }
 
     @GetMapping("{id}")
     ModelAndView read(@PathVariable long id) {
