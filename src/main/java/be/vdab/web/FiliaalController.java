@@ -3,14 +3,15 @@ package be.vdab.web;
 import be.vdab.entities.Filiaal;
 import be.vdab.exception.FiliaalHeeftNogWerknemersException;
 import be.vdab.services.FiliaalService;
+import be.vdab.valueobjects.PostcodeReeks;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -30,6 +31,7 @@ class FiliaalController {
     private static final String REDIRECT_URL_NA_VERWIJDEREN = "redirect:/filialen/{id}/verwijderd";
     private static final String REDIRECT_URL_HEEFT_NOG_WERKNEMERS = "redirect:/filialen/{id}";
     private static final String VERWIJDERD_VIEW = "filialen/verwijderd";
+    private static final String PER_POSTCODE_VIEW = "filialen/perpostcode";
     private final FiliaalService filiaalService;
 
     public FiliaalController(FiliaalService filiaalService){
@@ -39,6 +41,33 @@ class FiliaalController {
     @GetMapping
     ModelAndView findAll() {
         return new ModelAndView(FILIALEN_VIEW, "filialen", filiaalService.findAll()).addObject("aantalFilialen", filiaalService.findAantalFilialen());
+    }
+
+    @GetMapping(params = {"vanpostcode", "totpostcode"})
+    ModelAndView findPostcodeReeks(PostcodeReeks reeks, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView(PER_POSTCODE_VIEW);
+        if (!bindingResult.hasErrors()) {
+            List<Filiaal> filialen = filiaalService.findByPostcodeReeks(reeks);
+            if (filialen.isEmpty()) {
+                bindingResult.reject("geenFilialen");
+            } else {
+                modelAndView.addObject("filialen", filialen);
+            }
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("perpostcode")
+    ModelAndView findByPostcodeReeks() {
+        PostcodeReeks reeks = new PostcodeReeks();
+//        reeks.setVanpostcode(1000);
+//        reeks.setTotpostcode(9999);
+        return new ModelAndView(PER_POSTCODE_VIEW).addObject(reeks);
+    }
+
+    @InitBinder("postcodeReeks")
+    void initBinderPostcodeReeks(DataBinder dataBinder) {
+        dataBinder.setRequiredFields("vanpostcode", "totpostcode");
     }
 
     @GetMapping("{id}")
