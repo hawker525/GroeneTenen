@@ -2,7 +2,7 @@
 <%@ attribute name='url' required='true' type='java.lang.String'%>
 <%@ attribute name='knopTekst' required='true' type='java.lang.String'%>
 <%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
-<form:form action='${url}' commandName='filiaal' id='filiaalform'>
+<form:form action='/brouwers' commandName='filiaal' id='filiaalform'>
     <form:label path='naam'>Naam:<form:errors path='naam'/></form:label>
     <form:input path='naam' autofocus='autofocus' required='required' maxlength='50'/>
     <form:label path='adres.straat'>Straat:
