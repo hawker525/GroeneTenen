@@ -1,19 +1,19 @@
 package be.vdab.valueobjects;
 
-import org.hibernate.validator.constraints.Range;
+import be.vdab.constraints.Postcode;
+import be.vdab.constraints.PostcodeReeksVanKleinerDanOfGelijkAanTot;
 
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by maarten on 24/02/2017.
  */
-public class PostcodeReeks {
-    @NotNull @Range(min = MIN_POSTCODE, max = MAX_POSTCODE)
+@PostcodeReeksVanKleinerDanOfGelijkAanTot
+public final class PostcodeReeks {
+    @NotNull @Postcode
     private Integer vanpostcode;
-    @NotNull @Range(min = MIN_POSTCODE, max = MAX_POSTCODE)
+    @NotNull @Postcode
     private Integer totpostcode;
-    private static final int MIN_POSTCODE = 1000;
-    private static final int MAX_POSTCODE = 9999;
 
     public PostcodeReeks() {}
 
@@ -29,12 +29,5 @@ public class PostcodeReeks {
         return totpostcode;
     }
 
-    public void setVanpostcode(int vanpostcode) {
-        this.vanpostcode = vanpostcode;
-    }
-
-    public void setTotpostcode(int totpostcode) {
-        this.totpostcode = totpostcode;
-    }
 
 }
