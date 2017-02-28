@@ -31,7 +31,7 @@ public class Filiaal implements Serializable{
     @Digits(integer = 10, fraction = 2)
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     private BigDecimal waardeGebouw;
-    @DateTimeFormat(style = "S-")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @NotNull
     private LocalDate inGebruikName;
     @Valid

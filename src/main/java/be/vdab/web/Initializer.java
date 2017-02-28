@@ -1,5 +1,6 @@
 package be.vdab.web;
 
+import be.vdab.datasource.DataSourceConfig;
 import be.vdab.repositories.RepositoriesConfig;
 import be.vdab.services.ServicesConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -13,7 +14,7 @@ import javax.servlet.Filter;
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer{
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RepositoriesConfig.class, ServicesConfig.class};
+        return new Class<?>[]{RepositoriesConfig.class, ServicesConfig.class, DataSourceConfig.class};
     }
 
     @Override

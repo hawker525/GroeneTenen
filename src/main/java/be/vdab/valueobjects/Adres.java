@@ -1,9 +1,11 @@
 package be.vdab.valueobjects;
 
+import be.vdab.constraints.Postcode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -22,8 +24,8 @@ public final class Adres implements Serializable{
     @SafeHtml
     private String huisNr;
 
-    @NotBlank
-    @Length(min = 1, max = 50)
+    @NotNull
+    @Postcode
     private Integer postcode;
 
     @SafeHtml

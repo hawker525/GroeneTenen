@@ -107,7 +107,7 @@ class FiliaalController {
         return new ModelAndView(TOEVOEGEN_VIEW, "filiaal", new Filiaal());
     }
 
-    @PostMapping()
+    @PostMapping("")
     String create(@Valid Filiaal filiaal, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return TOEVOEGEN_VIEW;
