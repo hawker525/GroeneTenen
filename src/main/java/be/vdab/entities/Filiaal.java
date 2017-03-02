@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -14,12 +15,18 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * Created by Maarten Westelinck on 6/02/2017 for groenetenen.
  */
+@Entity
+@Table(name = "filialen")
 public class Filiaal implements Serializable{
     private static final long serialVersionUID=1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotBlank
     @Length(min = 1, max = 50)
@@ -35,7 +42,14 @@ public class Filiaal implements Serializable{
     @NotNull
     private LocalDate inGebruikName;
     @Valid
+    @Embedded
     private Adres adres;
+
+    @Version
+    private long versie;
+
+    @OneToMany(mappedBy = "filiaal")
+    private Set<Werknemer> werknemers;
 
     public Filiaal(){}
 
@@ -55,6 +69,10 @@ public class Filiaal implements Serializable{
                    BigDecimal waardeGebouw, LocalDate inGebruikName, Adres adres) {
         this(naam, hoofdFiliaal, waardeGebouw, inGebruikName, adres);
         this.id = id;
+    }
+
+    public Set<Werknemer> getWerknemers() {
+        return Collections.unmodifiableSet(werknemers);
     }
 
     public String getNaam() {
@@ -103,5 +121,17 @@ public class Filiaal implements Serializable{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Filiaal{" +
+                "id=" + id +
+                ", naam='" + naam + '\'' +
+                ", hoofdFiliaal=" + hoofdFiliaal +
+                ", waardeGebouw=" + waardeGebouw +
+                ", inGebruikName=" + inGebruikName +
+                ", adres=" + adres +
+                '}';
     }
 }

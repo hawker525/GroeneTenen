@@ -4,6 +4,7 @@ import be.vdab.entities.Filiaal;
 import be.vdab.exception.FiliaalHeeftNogWerknemersException;
 import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.PostcodeReeks;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,6 +35,7 @@ class FiliaalController {
     private static final String WIJZIGEN_VIEW = "filialen/wijzigen";
     private static final String REDIRECT_URL_NA_WIJZIGEN = "redirect:/filialen";
     private final FiliaalService filiaalService;
+    private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION ="redirect:/filialen/{id}?optimisticlockingexception=true";
 
     public FiliaalController(FiliaalService filiaalService){
         this.filiaalService = filiaalService;
@@ -58,8 +60,12 @@ class FiliaalController {
         if (bindingResult.hasErrors()) {
             return WIJZIGEN_VIEW;
         }
-        filiaalService.update(filiaal);
-        return REDIRECT_URL_NA_WIJZIGEN;
+        try {
+            filiaalService.update(filiaal);
+            return REDIRECT_URL_NA_WIJZIGEN;
+        } catch (ObjectOptimisticLockingFailureException ex) {
+            return REDIRECT_URL_NA_LOCKING_EXCEPTION;
+        }
     }
 
     @InitBinder("postcodeReeks")

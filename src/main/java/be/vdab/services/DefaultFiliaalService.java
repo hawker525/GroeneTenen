@@ -40,10 +40,11 @@ public class DefaultFiliaalService implements FiliaalService{
     @Override
     @ModifyingTransactionalServiceMethod
     public void delete(long id) {
-        if (filiaalRepository.findAantalWerknemers(id) != 0) {
-            throw new FiliaalHeeftNogWerknemersException();
+        Optional<Filiaal> filiaal = filiaalRepository.read(id);
+        if(filiaal.isPresent()) {
+            if(!filiaal.get().getWerknemers().isEmpty()) throw new FiliaalHeeftNogWerknemersException();
+            filiaalRepository.delete(id);
         }
-        filiaalRepository.delete(id);
     }
     @Override
     public List<Filiaal> findAll() {
