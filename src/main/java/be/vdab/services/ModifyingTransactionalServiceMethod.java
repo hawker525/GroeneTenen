@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
-public @interface ModifyingTransactionalServiceMethod {
+@interface ModifyingTransactionalServiceMethod {
 }

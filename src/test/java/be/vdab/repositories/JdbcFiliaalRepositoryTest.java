@@ -31,7 +31,7 @@ public class JdbcFiliaalRepositoryTest {
     public void create() {
         Filiaal filiaal = new Filiaal("TestNaam", true, BigDecimal.ONE,
                 LocalDate.now(), new Adres("Straat", "HuisNr", 1000, "Gemeente"));
-        filiaalRepository.create(filiaal);
+        filiaalRepository.save(filiaal);
         assertNotEquals(0, filiaal.getId()); // id moet autonumber hebben:
     }
 }

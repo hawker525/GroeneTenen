@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by Maarten Westelinck on 6/02/2017 for groenetenen.
+ *
  */
 public interface FiliaalRepository extends JpaRepository<Filiaal, Long>{
     List<Filiaal> findByAdresPostcodeBetweenOrderByNaam(int van, int tot);

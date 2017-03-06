@@ -12,17 +12,17 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 /**
  * Created by Maarten Westelinck on 6/02/2017 for groenetenen.
  */
-@Configuration
-@ComponentScan
 @EnableJpaRepositories
+@Configuration
 public class RepositoriesConfig {
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(dataSource);
         factory.setPackagesToScan(Filiaal.class.getPackage().getName(), Adres.class.getPackage().getName());

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
  * Created by Maarten Westelinck on 2/03/2017 for groenetenen.
  */
 @Entity
+@NamedEntityGraph(name = "Werknemer.metFiliaal", attributeNodes = @NamedAttributeNode("filiaal"))
 @Table(name = "werknemers")
 public class Werknemer implements Serializable{
     private static final long serialVersionUID = 1L;

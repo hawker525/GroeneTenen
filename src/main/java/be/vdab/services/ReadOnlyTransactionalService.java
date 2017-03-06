@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-public @interface ReadOnlyTransactionalService {
+@interface ReadOnlyTransactionalService {
 }

@@ -5,7 +5,6 @@ import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.Adres;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.matchers.Null;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,7 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,17 +51,13 @@ public class FiliaalControllerTest {
 
     @Test
     public void readActiveertJuisteView() {
-        assertEquals("filialen/filiaal", filiaalController.read(1L).getViewName());
+        assertEquals("filialen/filiaal", filiaalController.read(filiaal).getViewName());
     }
 
     @Test
     public void readMetBestaandeIDGeeftFiliaalTerug() {
         assertSame(filiaal,
-                filiaalController.read(1L).getModelMap().get("filiaal"));
+                filiaalController.read(filiaal).getModelMap().get("filiaal"));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void readMetOnbestaandeIDGeeftNullTerug() {
-        assertNull(filiaalController.read(666L).getModelMap().get("filiaal"));
-    }
 }
