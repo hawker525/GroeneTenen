@@ -1,6 +1,8 @@
 package be.vdab.entities;
 
+import be.vdab.restservices.LocalDateAdapter;
 import be.vdab.valueobjects.Adres;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -12,6 +14,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,6 +28,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "filialen")
+@XmlRootElement
 public class Filiaal implements Serializable{
     private static final long serialVersionUID=1L;
     @Id
@@ -38,9 +44,11 @@ public class Filiaal implements Serializable{
     @Digits(integer = 10, fraction = 2)
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     private BigDecimal waardeGebouw;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @NotNull
     private LocalDate inGebruikName;
+
     @Valid
     @Embedded
     private Adres adres;
@@ -49,6 +57,8 @@ public class Filiaal implements Serializable{
     private long versie;
 
     @OneToMany(mappedBy = "filiaal")
+    @XmlTransient
+    @JsonIgnore
     private Set<Werknemer> werknemers;
 
     public Filiaal(){}
@@ -73,6 +83,14 @@ public class Filiaal implements Serializable{
 
     public void afschrijven() {
         this.waardeGebouw = BigDecimal.ZERO;
+    }
+
+    public long getVersie() {
+        return versie;
+    }
+
+    public void setVersie(long versie) {
+        this.versie = versie;
     }
 
     public Set<Werknemer> getWerknemers() {
@@ -103,6 +121,7 @@ public class Filiaal implements Serializable{
         this.waardeGebouw = waardeGebouw;
     }
 
+    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     public LocalDate getInGebruikName() {
         return inGebruikName;
     }

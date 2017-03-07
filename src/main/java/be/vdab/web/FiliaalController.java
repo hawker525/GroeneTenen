@@ -4,6 +4,7 @@ import be.vdab.entities.Filiaal;
 import be.vdab.exception.FiliaalHeeftNogWerknemersException;
 import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.PostcodeReeks;
+import org.springframework.http.MediaType;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,10 +18,9 @@ import java.util.List;
 
 /**
  * Created by Maarten Westelinck on 2/02/2017 for groenetenen.
- *
  */
 @Controller
-@RequestMapping("/filialen")
+@RequestMapping(path = "filialen", produces = MediaType.TEXT_HTML_VALUE)
 class FiliaalController {
     private static final String FILIALEN_VIEW = "filialen/filialen";
     private static final String TOEVOEGEN_VIEW = "filialen/toevoegen";
@@ -36,9 +36,9 @@ class FiliaalController {
     private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven";
     private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/";
     private final FiliaalService filiaalService;
-    private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION ="redirect:/filialen/{id}?optimisticlockingexception=true";
+    private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = "redirect:/filialen/{id}?optimisticlockingexception=true";
 
-    public FiliaalController(FiliaalService filiaalService){
+    public FiliaalController(FiliaalService filiaalService) {
         this.filiaalService = filiaalService;
     }
 
@@ -49,7 +49,7 @@ class FiliaalController {
 
     @PostMapping("afschrijven")
     ModelAndView afschrijven(@Valid AfschrijvenForm afschrijvenForm, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return new ModelAndView(AFSCHRIJVEN_VIEW, "filialen", filiaalService.findNietAfgeschreven());
         }
         filiaalService.afschrijven(afschrijvenForm.getFilialen());
@@ -147,7 +147,7 @@ class FiliaalController {
         try {
             filiaalService.delete(id);
             redirectAttributes.addAttribute("id", id)
-.addAttribute("naam", filiaal.getNaam());
+                    .addAttribute("naam", filiaal.getNaam());
             return REDIRECT_URL_NA_VERWIJDEREN;
         } catch (FiliaalHeeftNogWerknemersException ex) {
             redirectAttributes.addAttribute("id", id)

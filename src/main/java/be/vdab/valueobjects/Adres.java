@@ -1,18 +1,23 @@
 package be.vdab.valueobjects;
 
 import be.vdab.constraints.Postcode;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 
 /**
  * Created by Maarten Westelinck on 6/02/2017 for groenetenen.
  */
 @Embeddable
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class Adres implements Serializable{
     private static final long serialVersionUID = 1L;
 
