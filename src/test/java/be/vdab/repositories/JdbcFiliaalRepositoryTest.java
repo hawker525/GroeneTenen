@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotEquals;
  * Created by Maarten Westelinck on 2/03/2017 for groenetenen.
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {TestDataSourceConfig.class, RepositoriesConfig.class})
+@ContextConfiguration(classes = {TestDataSourceConfig.class, TestRepositoriesConfig.class})
 @Transactional
 public class JdbcFiliaalRepositoryTest {
 
