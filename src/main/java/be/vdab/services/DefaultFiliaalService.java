@@ -7,6 +7,7 @@ import be.vdab.valueobjects.PostcodeReeks;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,5 +62,16 @@ public class DefaultFiliaalService implements FiliaalService{
     @Override
     public List<Filiaal> findByPostcodeReeks(PostcodeReeks reeks) {
         return filiaalRepository.findByAdresPostcodeBetweenOrderByNaam(reeks.getVanpostcode(), reeks.getTotpostcode());
+    }
+
+    @Override
+    public List<Filiaal> findNietAfgeschreven() {
+        return filiaalRepository.findByWaardeGebouwNot(BigDecimal.ZERO);
+    }
+
+    @Override
+    @ModifyingTransactionalServiceMethod
+    public void afschrijven(List<Filiaal> filialen) {
+        filialen.forEach(Filiaal::afschrijven);
     }
 }
