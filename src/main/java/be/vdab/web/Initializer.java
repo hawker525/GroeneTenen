@@ -2,6 +2,7 @@ package be.vdab.web;
 
 import be.vdab.datasource.DataSourceConfig;
 import be.vdab.repositories.RepositoriesConfig;
+import be.vdab.restclients.RestClientsConfig;
 import be.vdab.restservices.RestControllersConfig;
 import be.vdab.services.ServicesConfig;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
@@ -16,7 +17,7 @@ import javax.servlet.Filter;
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer{
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RepositoriesConfig.class, ServicesConfig.class, DataSourceConfig.class};
+        return new Class<?>[]{RestClientsConfig.class, RepositoriesConfig.class, ServicesConfig.class, DataSourceConfig.class};
     }
 
     @Override

@@ -2,6 +2,7 @@ package be.vdab.repositories;
 
 import be.vdab.datasource.TestDataSourceConfig;
 import be.vdab.entities.Filiaal;
+import be.vdab.restclients.RestClientsConfig;
 import be.vdab.valueobjects.Adres;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
  * Created by Maarten Westelinck on 2/03/2017 for groenetenen.
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {TestDataSourceConfig.class, TestRepositoriesConfig.class})
+@ContextConfiguration(classes = {TestDataSourceConfig.class, TestRepositoriesConfig.class, RestClientsConfig.class})
 @Transactional
 public class JdbcFiliaalRepositoryTest {
 
