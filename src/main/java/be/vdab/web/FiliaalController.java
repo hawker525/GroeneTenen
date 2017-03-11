@@ -35,6 +35,7 @@ class FiliaalController {
     private static final String REDIRECT_URL_NA_WIJZIGEN = "redirect:/filialen";
     private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven";
     private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/";
+    private static final String PER_ID_VIEW = "filialen/perid";
     private final FiliaalService filiaalService;
     private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = "redirect:/filialen/{id}?optimisticlockingexception=true";
 
@@ -45,6 +46,11 @@ class FiliaalController {
     @GetMapping("afschrijven")
     ModelAndView afschrijvenForm() {
         return new ModelAndView(AFSCHRIJVEN_VIEW, "filialen", filiaalService.findNietAfgeschreven()).addObject(new AfschrijvenForm());
+    }
+
+    @GetMapping("perid")
+    String findById() {
+        return PER_ID_VIEW;
     }
 
     @PostMapping("afschrijven")

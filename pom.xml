@@ -125,6 +125,12 @@
             <version>[2.2,]</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.24</version>
+        </dependency>
+
     </dependencies>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
