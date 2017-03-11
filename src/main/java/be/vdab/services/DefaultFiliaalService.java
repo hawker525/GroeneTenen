@@ -2,6 +2,7 @@ package be.vdab.services;
 
 import be.vdab.entities.Filiaal;
 import be.vdab.exception.FiliaalHeeftNogWerknemersException;
+import be.vdab.mail.MailSender;
 import be.vdab.repositories.FiliaalRepository;
 import be.vdab.valueobjects.PostcodeReeks;
 import org.springframework.data.domain.Sort;
@@ -19,15 +20,18 @@ import java.util.Optional;
 public class DefaultFiliaalService implements FiliaalService{
 
     private final FiliaalRepository filiaalRepository;
+    private final MailSender mailSender;
 
-    public DefaultFiliaalService(FiliaalRepository filiaalRepository) {
+    public DefaultFiliaalService(FiliaalRepository filiaalRepository, MailSender mailSender) {
         this.filiaalRepository = filiaalRepository;
+        this.mailSender = mailSender;
     }
 
     @Override
     @ModifyingTransactionalServiceMethod
     public void create(Filiaal filiaal) {
         filiaalRepository.save(filiaal);
+//        mailSender.nieuwFiliaalMail(filiaal);
     }
 
     @Override

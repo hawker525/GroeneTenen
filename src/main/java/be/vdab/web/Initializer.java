@@ -1,6 +1,7 @@
 package be.vdab.web;
 
 import be.vdab.datasource.DataSourceConfig;
+import be.vdab.mail.MailConfig;
 import be.vdab.repositories.RepositoriesConfig;
 import be.vdab.restclients.RestClientsConfig;
 import be.vdab.restservices.RestControllersConfig;
@@ -17,7 +18,7 @@ import javax.servlet.Filter;
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer{
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RestClientsConfig.class, RepositoriesConfig.class, ServicesConfig.class, DataSourceConfig.class};
+        return new Class<?>[]{MailConfig.class, RestClientsConfig.class, RepositoriesConfig.class, ServicesConfig.class, DataSourceConfig.class};
     }
 
     @Override
