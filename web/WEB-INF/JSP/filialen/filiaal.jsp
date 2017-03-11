@@ -1,6 +1,7 @@
 <%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@taglib prefix='v' uri='http://vdab.be/tags'%>
+<%@taglib prefix='security' uri='http://www.springframework.org/security/tags'%>
 <%@taglib prefix= 'spring' uri= 'http://www.springframework.org/tags'%>
 <!doctype html>
 <html lang='nl'>
@@ -36,6 +37,7 @@
         <spring:param name='id' value='${filiaal.id}'/>
     </spring:url>
     <form action='${verwijderURL}' method='post'>
+        <security:csrfInput/>
         <input type='submit' value='Verwijderen'>
     </form>
     <spring:url value='/filialen/{id}/wijzigen' var='wijzigURL'>

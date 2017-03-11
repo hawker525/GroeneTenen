@@ -6,6 +6,7 @@ import be.vdab.mail.MailSender;
 import be.vdab.repositories.FiliaalRepository;
 import be.vdab.valueobjects.PostcodeReeks;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -64,6 +65,7 @@ public class DefaultFiliaalService implements FiliaalService{
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('manager')")
     public List<Filiaal> findByPostcodeReeks(PostcodeReeks reeks) {
         return filiaalRepository.findByAdresPostcodeBetweenOrderByNaam(reeks.getVanpostcode(), reeks.getTotpostcode());
     }
